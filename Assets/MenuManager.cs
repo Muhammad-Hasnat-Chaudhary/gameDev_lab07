@@ -342,4 +342,44 @@ public class MenuManager : MonoBehaviour
         Debug.Log("SETTINGS RESET!");
     }
 
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        ShowScreen(levelSelectScreen);
+        Debug.Log("GAME RESUMED!");
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        ShowScreen(levelSelectScreen);
+        Debug.Log("MISSION RESTARTED!");
+    }
+
+    public void ShowScore()
+    {
+        int missionScore = 850;
+        Debug.Log("MISSION SCORE: " + missionScore);
+    }
+
+    private bool rewardClaimed = false;
+
+    public void ClaimReward()
+    {
+        if (rewardClaimed)
+        {
+            Debug.Log("REWARD ALREADY CLAIMED!");
+            return;
+        }
+
+        credits += 100;
+        rewardClaimed = true;
+
+        UpdateCreditsText();
+
+        Debug.Log("REWARD CLAIMED: +100 CREDITS!");
+        Debug.Log("TOTAL CREDITS: " + credits);
+    }
+
+
 }
