@@ -269,4 +269,77 @@ public class MenuManager : MonoBehaviour
         Debug.Log("SPEED: " +
             (speedPurchased ? "OWNED" : "NOT OWNED"));
     }
+
+    [Header("Settings UI")]
+    public TMP_Text musicButtonText;
+    public TMP_Text soundButtonText;
+    public TMP_Text qualityButtonText;
+
+    private bool musicEnabled = true;
+    private bool soundEnabled = true;
+    private int qualityLevel = 1;
+
+    public void ToggleMusic()
+    {
+        musicEnabled = !musicEnabled;
+
+        if (musicButtonText != null)
+            musicButtonText.text =
+                musicEnabled ? "MUSIC: ON" : "MUSIC: OFF";
+
+        Debug.Log("MUSIC: " + (musicEnabled ? "ON" : "OFF"));
+    }
+
+    public void ToggleSound()
+    {
+        soundEnabled = !soundEnabled;
+
+        if (soundButtonText != null)
+            soundButtonText.text =
+                soundEnabled ? "SOUND: ON" : "SOUND: OFF";
+
+        AudioListener.volume = soundEnabled ? 1f : 0f;
+
+        Debug.Log("SOUND: " + (soundEnabled ? "ON" : "OFF"));
+    }
+
+    public void ChangeQuality()
+    {
+        qualityLevel = (qualityLevel + 1) % 3;
+
+        string[] levels = { "LOW", "MEDIUM", "HIGH" };
+
+        if (qualityButtonText != null)
+            qualityButtonText.text =
+                "QUALITY: " + levels[qualityLevel];
+
+        QualitySettings.SetQualityLevel(
+            Mathf.Min(qualityLevel,
+                QualitySettings.names.Length - 1),
+            true
+        );
+
+        Debug.Log("QUALITY: " + levels[qualityLevel]);
+    }
+
+    public void ResetSettings()
+    {
+        musicEnabled = true;
+        soundEnabled = true;
+        qualityLevel = 1;
+
+        AudioListener.volume = 1f;
+
+        if (musicButtonText != null)
+            musicButtonText.text = "MUSIC: ON";
+
+        if (soundButtonText != null)
+            soundButtonText.text = "SOUND: ON";
+
+        if (qualityButtonText != null)
+            qualityButtonText.text = "QUALITY: MEDIUM";
+
+        Debug.Log("SETTINGS RESET!");
+    }
+
 }
